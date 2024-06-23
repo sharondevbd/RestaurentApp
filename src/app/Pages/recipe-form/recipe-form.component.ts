@@ -64,8 +64,8 @@ export class RecipeFormComponent implements OnInit {
 
   rawsrv = inject(RawitemService)
 
-  cat:any=[{CategoryName:"New", Id:0, IsActive:true}]; 
-  Catagory:any=[{CategoryName:"New", Id:0, IsActive:true}];
+  cat = new Catagory; 
+  Catagory:any=[{CategoryName:"Loading...", Id:0, IsActive:true}];
   catsrv = inject(CatagoryService)
 
   ngOnInit(): void {
@@ -81,7 +81,6 @@ export class RecipeFormComponent implements OnInit {
           //Raw Item
         this.rawsrv.getAll().subscribe({
           next:(res)=>{this.RawMaterialList = res;
-            debugger
             console.log(res)
           }})
 
@@ -113,7 +112,11 @@ export class RecipeFormComponent implements OnInit {
     alert("Clicked")
   }
   savecat() {
-    this.catsrv.create(this.cat).subscribe({
+   let Category= this.cat;
+    console.log(this.cat)
+  
+    debugger
+    this.catsrv.create(Category).subscribe({
       next:(res)=>{
         this.inputbox = false
         alert("A new Category Created")
