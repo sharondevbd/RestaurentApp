@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { FoodingredientsService } from '../../services/foodingredients.service';
@@ -16,6 +16,12 @@ import { RawitemService } from '../../services/rawitem.service';
   styleUrl: './recipe-form.component.css'
 })
 export class RecipeFormComponent implements OnInit {
+ 
+  @Output() removeRawMaterial = new EventEmitter<any>();
+removeRawDetail(index: number) {
+  const removedItem = this.RawMaterialList.splice(index, 1)[0];
+  this.removeRawMaterial.emit(removedItem);
+}
 
   constructor(public service:FoodingredientsService){} 
 
@@ -53,7 +59,7 @@ export class RecipeFormComponent implements OnInit {
   // catagory:Catagory[] = [CategoryName:"", CategoryId:0]
 
   RawItem:any=[];
-  RawMaterialList:any=[{
+  @Input() RawMaterialList:any=[{
     Id: 0,
     Name: '',
     UnitId: 0,
@@ -96,9 +102,9 @@ export class RecipeFormComponent implements OnInit {
   }
   isEditMode = false;
   customers:any = [];
-  removeOrderDetail(i:any){
-    (i).closest('tr').remove();
-  }
+  // removeOrderDetail(i:any){
+  //   (i).closest('tr').remove();
+  // }
   save(){
     //post
     this.service.create(this.Recipe).subscribe(res=>{
