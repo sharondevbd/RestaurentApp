@@ -1,0 +1,26 @@
+<div class="row">
+    <div class="col-md-8">
+        <table class="table text-center">
+            <thead class="table-dark">
+              <tr>
+                <th>No</th>
+                <th>Name</th>             
+                <th>Raw Materials</th>
+                <th>Qty</th>
+                <th><button class="btn btn-info" (click)="addRecipe()">Add Recipe</button></th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (item of Recipe; track $index) {
+                <tr>
+                  <td>{{$index+1}}</td>
+                <td>{{item.Food.ItemName}}</td>
+                <td>{{item.RawMaterial.Name}}</td>
+                <td>{{item.Quantity}} {{item.Unit.UnitName}}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+    </div>
+    <div class="col-md-4"></div>
+</div>

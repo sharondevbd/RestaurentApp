@@ -1,0 +1,71 @@
+<div class="container">
+    <h2 class="mt-3" *ngIf="isEditMode">Edit Order</h2>
+    <h2 class="mt-3" *ngIf="!isEditMode">Create Order</h2>
+  
+    <form class="mt-3" (ngSubmit)="save()" #recipeForm="ngForm">
+  
+      <div class="mb-3">
+        <label for="customerId" class="form-label">Recipe Name:</label>
+        <input class="form-control" type="text" placeholder="Recipe Name Ex: Burger">
+        <label for="catagoryId" class="form-label">Catagory:</label>
+        
+        <select *ngIf="!inputbox" id="catagoryId" [(ngModel)]="Catagory" name="catagoryId" class="form-control" required>
+          <!-- <option selected disabled (click)="newCatagory()">Select a Catagory</option> -->
+          <option *ngFor="let catagory of Catagory" [value]="catagory.CategoryId">{{ catagory.CategoryName}}</option>
+        </select>
+
+        <div *ngIf="inputbox">
+          <input *ngIf="inputbox" [(ngModel)]="Catagory.CategoryName" class="form-control" type="text" placeholder="Enter A New Catagory"> 
+          <button type="submit" class="btn btn-success" (click)="savecat()">Save Catagory</button></div>
+        
+        <button  (click)="newCatagory()" *ngIf="!inputbox" class="btn btn-info ">New Catagory</button>
+      </div>
+  
+      <div class="mb-3 form-check">
+        <input id="IsSellable" [(ngModel)]="customers" name="IsSellable" class="form-check-input" type="checkbox">
+        <label class="form-check-label" for="IsSellable">IsSellable? </label>
+      </div>
+  
+      <div class="mb-3">
+        <h2 style="text-align: center">Raw Items</h2>
+        <button type="button" class="btn btn-primary" (click)="addRawItem()">Add More</button>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Item</th>
+              <th>Quantity</th>
+              <th>Unit</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr *ngFor="let rawitem of RawItem; let i = index">
+              <td>{{i+1}}</td>
+              <td>
+                <select [(ngModel)]="Recipe.RawMaterialId" name="RawMaterialId-{{i}}" class="form-control" required>
+                  <option value="" disabled>Select a Raw Item</option>
+                  <option *ngFor="let rawitem of RawMaterialList" [value]="rawitem.Id">{{ rawitem.Name }}</option>
+                </select>
+              </td>
+              <td>
+                <input [(ngModel)]="Recipe.Quantity" name="qty-{{i}}" class="form-control" type="number" min="1" required>
+              </td>
+              
+              <select [(ngModel)]="Recipe.UnitId" name="UnitId-{{i}}" class="form-control" required>
+                <option value="" disabled>Select Unit</option>
+                <option *ngFor="let unit of RawMaterialList" [value]="unit.Unit.Id">{{ unit.Unit.UnitName }}</option>
+              </select>
+              
+              <td>
+                <button type="button" class="btn btn-danger" (click)="removeOrderDetail($event)">Remove</button>
+              </td>
+            </tr>
+            
+            </tbody>
+        </table>
+      </div>
+  
+      <button type="submit" class="btn btn-success">Save</button>
+    </form>
+  </div>

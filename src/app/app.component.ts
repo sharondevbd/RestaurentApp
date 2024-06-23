@@ -1,3 +1,4 @@
+import { HttpClient, provideHttpClient, withFetch } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
@@ -6,7 +7,8 @@ import { RouterOutlet } from '@angular/router';
   standalone: true,
   imports: [RouterOutlet],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
+  providers:[HttpClient]
 })
 export class AppComponent {
   title = 'RestaurentApp';
