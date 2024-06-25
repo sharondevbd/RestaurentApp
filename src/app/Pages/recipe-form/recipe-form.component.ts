@@ -98,7 +98,7 @@ removeRawDetail(index: number) {
     const strobj = JSON.stringify(this.RawMaterialList);
     const obj = JSON.parse(strobj);
     this.RawItem.unshift(obj);
-    // this.Recipe.push({ Id: 0, RawMaterialId:0, Quantity:0, UnitId:0 });
+    // this.RawItem.push({ Id: 0, RawMaterialId:0, Quantity:0, UnitId:0 });
   }
   isEditMode = false;
   customers:any = [];
