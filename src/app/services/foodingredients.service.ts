@@ -2,12 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FoodIngredients } from '../models/food-ingredients.model';
 import { Observable } from 'rxjs';
+import { Rawitem } from '../models/rawitem.model';
 
 const baseUrl="https://localhost:7176/api/FoodIngredients";
 @Injectable({
   providedIn: 'root'
 })
 export class FoodingredientsService {
+
+  RawMaterial: Rawitem[] = [];
 
   constructor(private http:HttpClient) { }
   getAll(): Observable<FoodIngredients[]> {
@@ -17,8 +20,12 @@ export class FoodingredientsService {
   get(id: any): Observable<FoodIngredients> {
     return this.http.get<FoodIngredients>(`${baseUrl}/${id}`);
   }
-  create(data: any): Observable<any> {
-    return this.http.post(baseUrl, data);
+  create(data: FoodIngredients): Observable<any> {
+    const obj = {
+      ...data,
+      RawMaterial: this.RawMaterial,
+    };
+    return this.http.post(baseUrl, obj);
   }
 
   update(  data: any): Observable<any> {
